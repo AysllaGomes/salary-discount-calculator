@@ -46,7 +46,7 @@ export class DiscountService {
       }
     }
 
-    return Math.max(irrf, 0);
+    return irrf >= 0 ? irrf : 0;
   }
 
   calculateNetSalary(salary: number): number {
