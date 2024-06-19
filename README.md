@@ -1,73 +1,57 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+## API de Descontos Salariais
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A API de Descontos Salariais é uma aplicação Node.js construída com NestJS que fornece serviços para calcular descontos salariais, incluindo INSS e IRRF.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Instalação
 
-## Description
+Para instalar e executar a API localmente, siga estas etapas:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+1. Clone o repositório:
 
-## Installation
+    ```bash
+        https://github.com/AysllaGomes/salary-discount-calculator.git
+    ```
+2. Instale as dependências:
 
-```bash
-$ npm install
-```
+    ```bash
+      npm install
+    ```
+3. Execute a API:
 
-## Running the app
+    ```bash
+    # development
+    $ npm run start
+    
+    # watch mode
+    $ npm run start:dev
+    
+    # production mode
+    $ npm run start:prod
+    ```
+   
+## Endpoints
+`GET /discount`
 
-```bash
-# development
-$ npm run start
+Calcula o salário líquido com base no salário bruto fornecido
 
-# watch mode
-$ npm run start:dev
+### Parâmetros da Consulta (Query Parameters)
 
-# production mode
-$ npm run start:prod
-```
+    salary: O salário bruto do funcionário.
 
-## Test
+### Exemplo de Requisição
 
-```bash
-# unit tests
-$ npm run test
+    curl --location '{{port}}/discount?salary=3000'
 
-# e2e tests
-$ npm run test:e2e
+### Exemplo de Resposta
 
-# test coverage
-$ npm run test:cov
-```
+    {
+        "netSalary": 2686.1152500000003
+    }
 
-## Support
+## Contribuindo
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Se você quiser contribuir com este projeto, sinta-se à vontade para enviar uma pull request.
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+Este projeto está licenciado sob [MIT licensed](LICENSE).
