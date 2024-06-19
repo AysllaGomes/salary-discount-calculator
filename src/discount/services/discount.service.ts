@@ -1,18 +1,24 @@
 import { Injectable } from '@nestjs/common';
 
+import { TaxBraketEnum } from '../models/enums/tax-braket.enum';
+
 import { TaxBracket } from '../models/interface/tax-bracket.models';
 
 @Injectable()
 export class DiscountService {
   private readonly inssBrackets: TaxBracket[] = [
-    { limite: 1302.0, aliquota: 0.075, deducao: 0 },
-    { limite: 2571.29, aliquota: 0.09, deducao: 0 },
-    { limite: 3856.94, aliquota: 0.12, deducao: 0 },
-    { limite: 7507.49, aliquota: 0.14, deducao: 0 },
+    { limite: 1302.0, aliquota: 0.075, deducao: TaxBraketEnum.ZERO_DEDUCTION },
+    { limite: 2571.29, aliquota: 0.09, deducao: TaxBraketEnum.ZERO_DEDUCTION },
+    { limite: 3856.94, aliquota: 0.12, deducao: TaxBraketEnum.ZERO_DEDUCTION },
+    { limite: 7507.49, aliquota: 0.14, deducao: TaxBraketEnum.ZERO_DEDUCTION },
   ];
 
   private readonly irrfBrackets: TaxBracket[] = [
-    { limite: 1903.98, aliquota: 0, deducao: 0 },
+    {
+      limite: 1903.98,
+      aliquota: TaxBraketEnum.ZERO_DEDUCTION,
+      deducao: TaxBraketEnum.ZERO_DEDUCTION,
+    },
     { limite: 2826.65, aliquota: 0.075, deducao: 142.8 },
     { limite: 3751.05, aliquota: 0.15, deducao: 354.8 },
     { limite: 4664.68, aliquota: 0.225, deducao: 636.13 },
