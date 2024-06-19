@@ -8,8 +8,9 @@ export class DiscountController {
 
   @Get()
   calculateNetSalary(@Query('salary') salary: string): any {
-    const salaryNum = parseFloat(salary);
-    const netSalary = this.discountService.calculateNetSalary(salaryNum);
+    const salaryNum: number = parseFloat(salary);
+    const netSalary: number =
+      this.discountService.calculateNetSalary(salaryNum);
     return { netSalary };
   }
 }
