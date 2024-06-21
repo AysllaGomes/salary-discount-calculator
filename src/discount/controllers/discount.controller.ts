@@ -4,13 +4,22 @@ import { DiscountService } from '../services/discount.service';
 
 @Controller('discount')
 export class DiscountController {
-  constructor(private readonly discountService: DiscountService) {}
+  constructor(protected readonly discountService: DiscountService) {}
 
   @Get()
-  calculateNetSalary(@Query('salary') salary: string): any {
+  calculateNetSalary(
+    @Query('salary') salary: string,
+    @Query('discount') discount: string,
+    @Query('dependents') dependents: string,
+  ): any {
     const salaryNum: number = parseFloat(salary);
-    const netSalary: number =
-      this.discountService.calculateNetSalary(salaryNum);
-    return { netSalary };
+    const discountNum: number = discount ? parseFloat(discount) : 0;
+    const dependentsNum: number = dependents ? parseInt(dependents, 10) : 0;
+
+    return this.discountService.calculateNetSalary(
+      salaryNum,
+      discountNum,
+      dependentsNum,
+    );
   }
 }

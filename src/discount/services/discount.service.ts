@@ -1,35 +1,48 @@
 import { Injectable } from '@nestjs/common';
 
-import { TaxBraketEnum } from '../models/enums/tax-braket.enum';
-
-import { TaxBracket } from '../models/interface/tax-bracket.models';
+import { IrrfBracketsService } from '../../utils/irrf/irrf-brackets.service';
+import { InssBracketsService } from '../../utils/inss/inss-brackets.service';
 
 @Injectable()
 export class DiscountService {
-  private readonly inssBrackets: TaxBracket[] = [
-    { limite: 1302.0, aliquota: 0.075, deducao: TaxBraketEnum.ZERO_DEDUCTION },
-    { limite: 2571.29, aliquota: 0.09, deducao: TaxBraketEnum.ZERO_DEDUCTION },
-    { limite: 3856.94, aliquota: 0.12, deducao: TaxBraketEnum.ZERO_DEDUCTION },
-    { limite: 7507.49, aliquota: 0.14, deducao: TaxBraketEnum.ZERO_DEDUCTION },
-  ];
+  calculateNetSalary(
+    salary: number,
+    discount: number,
+    dependents: number,
+  ): any {
+    // Aplica os descontos opcionais
+    const salaryAfterDiscount: number = salary - discount;
 
-  private readonly irrfBrackets: TaxBracket[] = [
-    {
-      limite: 1903.98,
-      aliquota: TaxBraketEnum.ZERO_DEDUCTION,
-      deducao: TaxBraketEnum.ZERO_DEDUCTION,
-    },
-    { limite: 2826.65, aliquota: 0.075, deducao: 142.8 },
-    { limite: 3751.05, aliquota: 0.15, deducao: 354.8 },
-    { limite: 4664.68, aliquota: 0.225, deducao: 636.13 },
-    { limite: Infinity, aliquota: 0.275, deducao: 869.36 },
-  ];
+    // Calcula INSS
+    const inss: number = this.calculateINSS(salaryAfterDiscount);
+
+    // Calcula salário após INSS
+    const salaryAfterINSS: number = salaryAfterDiscount - inss;
+
+    // Calcula IRRF com dependentes
+    const irrf: number = this.calculateIRRF(salaryAfterINSS, dependents);
+
+    // Calcula valor por dependente
+    const deducaoPorDependente = 189.59;
+    const valorPorDependente: number = dependents * deducaoPorDependente;
+
+    // Salário líquido
+    const netSalary: number = parseFloat((salaryAfterINSS - irrf).toFixed(2));
+
+    // Retorna os dados detalhados
+    return {
+      valorPorDependente: valorPorDependente.toFixed(2),
+      contribuicaoINSS: inss.toFixed(2),
+      descontoIRRF: irrf.toFixed(2),
+      salarioLiquido: netSalary.toFixed(2),
+    };
+  }
 
   calculateINSS(salary: number): number {
     let inss: number = 0;
     let salarioRestante: number = salary;
 
-    for (const { limite, aliquota } of this.inssBrackets) {
+    for (const { limite, aliquota } of InssBracketsService.INSS_BRACKETS) {
       if (salarioRestante > limite) {
         inss += limite * aliquota;
         salarioRestante -= limite;
@@ -42,23 +55,24 @@ export class DiscountService {
     return inss;
   }
 
-  calculateIRRF(salary: number): number {
+  calculateIRRF(salary: number, dependents: number): number {
+    // Dedução por dependente
+    const deducaoPorDependente = 189.59;
+    const deducaoTotalDependentes: number = dependents * deducaoPorDependente;
+
     let irrf: number = 0;
 
-    for (const { limite, aliquota, deducao } of this.irrfBrackets) {
+    for (const {
+      limite,
+      aliquota,
+      deducao,
+    } of IrrfBracketsService.IRRF_BRACKETS) {
       if (salary <= limite) {
-        irrf = salary * aliquota - deducao;
+        irrf = salary * aliquota - deducao - deducaoTotalDependentes;
         break;
       }
     }
 
     return irrf >= 0 ? irrf : 0;
-  }
-
-  calculateNetSalary(salary: number): number {
-    const inss: number = this.calculateINSS(salary);
-    const salaryAfterINSS: number = salary - inss;
-    const irrf: number = this.calculateIRRF(salaryAfterINSS);
-    return parseFloat((salaryAfterINSS - irrf).toFixed(2));
   }
 }
