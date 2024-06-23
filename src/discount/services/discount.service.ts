@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
-import { IrrfBracketsService } from '../../utils/irrf/irrf-brackets.service';
 import { InssBracketsService } from '../../utils/inss/inss-brackets.service';
+import { IrrfBracketsService } from '../../utils/irrf/irrf-brackets.service';
+
+import { IOutputCalculateNetSalaryModels } from '../models/interface/output-calculate-net-salary.models';
 
 @Injectable()
 export class DiscountService {
@@ -9,7 +11,7 @@ export class DiscountService {
     salary: number,
     discount: number,
     dependents: number,
-  ): any {
+  ): IOutputCalculateNetSalaryModels {
     // Aplica os descontos opcionais
     const salaryAfterDiscount: number = salary - discount;
 
