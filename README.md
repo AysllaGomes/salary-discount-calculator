@@ -1,22 +1,27 @@
-## API de Descontos Salariais
+## Salary Discount API
 
-A API de Descontos Salariais é uma aplicação Node.js construída com NestJS que fornece serviços para calcular descontos salariais, incluindo INSS e IRRF.
+This API calculates the net salary based on the gross salary, optional discounts, and the number of dependents. The calculation includes INSS contributions and IRRF deductions.
 
-## Instalação
+## Configuration
 
-Para instalar e executar a API localmente, siga estas etapas:
+### Prerequisites
 
-1. Clone o repositório:
+- [Node.js](https://nodejs.org/en/blog/release/v18.19.0) v.18.19.0
+- [NestJS](https://nestjs.com/)
+
+## Installation
+
+1. Clone the repository:
 
     ```bash
         https://github.com/AysllaGomes/salary-discount-calculator.git
     ```
-2. Instale as dependências:
+2. Install the dependencies:
 
     ```bash
       npm install
     ```
-3. Execute a API:
+3. Running the Application:
 
     ```bash
     # development
@@ -28,30 +33,33 @@ Para instalar e executar a API localmente, siga estas etapas:
     # production mode
     $ npm run start:prod
     ```
-   
+
+The API will be available at http://localhost:3000.
+
 ## Endpoints
 `GET /discount`
 
-Calcula o salário líquido com base no salário bruto fornecido
+Calculates the net salary based on the provided parameters.
 
-### Parâmetros da Consulta (Query Parameters)
+### Query Parameters
 
-    salary: O salário bruto do funcionário.
+- (required) salary: The gross salary.
+- (optional) discount: Additional discounts applied to the gross salary.
+- (optional) dependents: Number of dependents.
 
-### Exemplo de Requisição
+### Example Request
 
-    curl --location '{{port}}/discount?salary=3000'
+    curl --location '{{port}}/discount?salary=10000&discount=500&dependents=2'
 
-### Exemplo de Resposta
+### Example Response
 
     {
-        "netSalary": 2686.1152500000003
+      "valorPorDependente": "379.18",
+      "contribuicaoINSS": "751.79",
+      "descontoIRRF": "142.80",
+      "salarioLiquido": "8726.41"
     }
-
-## Contribuindo
-
-Se você quiser contribuir com este projeto, sinta-se à vontade para enviar uma pull request.
 
 ## License
 
-Este projeto está licenciado sob [MIT licensed](LICENSE).
+This project is licensed under the MIT License - see the [MIT licensed](LICENSE) file for details.
