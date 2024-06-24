@@ -12,14 +12,11 @@ export class DiscountService {
     discount: number,
     dependents: number,
   ): IOutputCalculateNetSalaryModels {
-    // Aplica os descontos opcionais
-    const salaryAfterDiscount: number = salary - discount;
-
     // Calcula INSS
-    const inss: number = this.calculateINSS(salaryAfterDiscount);
+    const inss: number = this.calculateINSS(salary);
 
     // Calcula salário após INSS
-    const salaryAfterINSS: number = salaryAfterDiscount - inss;
+    const salaryAfterINSS: number = salary - inss;
 
     // Calcula IRRF com dependentes
     const irrf: number = this.calculateIRRF(salaryAfterINSS, dependents);
@@ -28,8 +25,13 @@ export class DiscountService {
     const deducaoPorDependente = 189.59;
     const valorPorDependente: number = dependents * deducaoPorDependente;
 
+    const salaryAfterIRRF: number = salaryAfterINSS - irrf;
+
+    // Aplica os descontos opcionais
+    const salaryAfterDiscount: number = salaryAfterIRRF - discount;
+
     // Salário líquido
-    const netSalary: number = parseFloat((salaryAfterINSS - irrf).toFixed(2));
+    const netSalary: number = parseFloat(salaryAfterDiscount.toFixed(2));
 
     // Retorna os dados detalhados
     return {
