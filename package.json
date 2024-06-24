@@ -1,6 +1,6 @@
 {
-  "name": "salary-discount-calculator",
-  "version": "0.0.1",
+  "name": "salary-discount-calculator-api",
+  "version": "1.0.0",
   "author": "Ayslla Gomes",
   "license": "MIT",
   "private": true,
