@@ -36,6 +36,15 @@ This API calculates the net salary based on the gross salary, optional discounts
 
 The API will be available at http://localhost:3000.
 
+## Swagger
+
+The API uses Swagger to provide interactive documentation. You can access full documentation of available endpoints and test API calls directly through the Swagger UI.
+
+To access the Swagger documentation:
+
+- Start the application.
+- Navigate to http://localhost:3000/api-docs.
+
 ## Endpoints
 `GET /discount`
 
@@ -60,6 +69,23 @@ Calculates the net salary based on the provided parameters.
       "salarioLiquido": "8726.41"
     }
 
+## Changelog
+
+All major changes to this project are documented in the file [CHANGELOG.md](./CHANGELOG.md).
+
 ## License
 
 This project is licensed under the MIT License - see the [MIT licensed](LICENSE) file for details.
+
+
+## Contributing
+
+1. Fork the project.
+
+2. Create a branch for your feature (git checkout -b feature/feature-name).
+
+3. Commit your changes (git commit -am 'Add a new feature').
+
+4. Push to the original repository (git push origin feature/feature-name).
+
+5. Create a new Pull Request.
